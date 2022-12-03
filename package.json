@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^4.16.0",
     "@teamhanko/hanko-elements": "^0.0.15-alpha",
+    "@teamhanko/hanko-frontend-sdk": "^0.0.9-alpha",
     "@trpc/client": "^10.0.0",
     "@trpc/next": "^10.0.0",
     "@trpc/react-query": "^10.0.0",

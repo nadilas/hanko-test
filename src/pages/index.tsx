@@ -1,19 +1,21 @@
 import { type NextPage } from "next";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import { Suspense } from "react";
 
 import { trpc } from "../utils/trpc";
-
-const Auth = dynamic(
-  // replace with path to your component using the <hanko-auth> element
-  () => import('../components/hanko-auth'),
-  { ssr: false },
-)
+import { useCurrentUser } from "../utils/use-user";
 
 const Home: NextPage = () => {
+  const {currentUser, isLoading} = useCurrentUser()
   const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+
+  if (isLoading) {
+    return (
+      <div>
+        Logging you in
+      </div>
+    )
+  }
 
   return (
     <>
@@ -52,9 +54,9 @@ const Home: NextPage = () => {
           <p className="text-2xl text-white">
             {hello.data ? hello.data.greeting : "Loading tRPC query..."}
           </p>
-          <Suspense fallback={"Loading ..."}>
-            <Auth />
-          </Suspense>
+          <pre className="px-8 text-2xl text-white">
+            {JSON.stringify(currentUser, null, "  ")}
+          </pre>
         </div>
       </main>
     </>
